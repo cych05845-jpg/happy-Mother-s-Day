@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>母親節卡片 | 嘉基急診</title>
+    <meta name="description" content="致敬最專業的醫護，最溫柔的媽媽。點擊開啟我們的溫馨祝福與留言。">
+    <meta property="og:title" content="母親節卡片 | 嘉基急診">
+    <meta property="og:description" content="忙碌的診間裡，妳們是堅韌的戰士；回到家後，妳們是溫暖的堡壘。母親節快樂！">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://img.icons8.com/color/480/envelope-with-heart.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: #fffafa;
+            margin: 0;
+            padding-bottom: 50px;
+            background-image: radial-gradient(#ffe4e6 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
+        }
+
+        .petal {
+            position: fixed;
+            top: -10%;
+            user-select: none;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+            margin: 15px auto;
+        }
+
+        .envelope {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            background: #e11d48;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            box-shadow: 0 15px 40px rgba(225, 29, 72, 0.2);
+            margin: 0 auto;
+        }
+
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: 2;
+            border-top: 100px solid transparent;
+            border-left: 140px solid #fb7185;
+            border-right: 140px solid #fb7185;
+            border-bottom: 90px solid #fb7185;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-top: 100px solid #e11d48;
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 3;
+        }
+
+        .letter {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 140px;
+            background: #fff;
+            z-index: 1;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow-y: auto;
+            border: 1px solid #ffe4e6;
+        }
+
+        .envelope-wrapper.open .flap { transform: translateX(-50%) rotateX(180deg); z-index: 0; }
+
+        .envelope-wrapper.open .letter {
+            bottom: 30px;
+            height: 400px;
+            max-height: 55vh;
+            width: 320px;
+            z-index: 10;
+            padding: 25px;
+            border: 6px double #ffe4e6;
+        }
+
+        .heart-btn {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 4;
+            transition: all 0.3s ease;
+        }
+
+        .envelope-wrapper.open .heart-btn { opacity: 0; pointer-events: none; }
+
+        .card-content { opacity: 0; transition: opacity 0.5s ease 0.4s; }
+        .envelope-wrapper.open .card-content { opacity: 1; }
+
+        .message-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border-left: 5px solid #fb7185;
+            transition: all 0.3s ease;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (min-width: 768px) {
+            .envelope { width: 340px; height: 220px; }
+            .flap { border-left-width: 170px; border-right-width: 170px; border-top-width: 120px; }
+            .envelope::before { border-top-width: 120px; border-left-width: 170px; border-right-width: 170px; border-bottom-width: 110px; }
+            .envelope-wrapper.open .letter { width: 380px; height: 480px; bottom: 80px; }
+        }
+    </style>
+</head>
+<body class="min-h-screen overflow-x-hidden">
+
+    <div id="particles-container"></div>
+
+    <div class="max-w-4xl mx-auto px-4 py-4 relative z-10">
+        <header class="text-center mb-4">
+            <div class="flex flex-col items-center justify-center mb-2">
+                <svg class="cych-logo w-24 h-16 mb-1" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M75 35 C55 10, 10 35, 10 70 C10 95, 50 115, 75 115 C100 115, 140 95, 140 70 C140 35, 95 10, 75 35 Z" fill="none" stroke="#9ca3af" stroke-width="4" />
+                    <path d="M75 35 C55 10, 10 35, 10 70 C10 95, 50 115, 75 115 L75 102 C55 102, 23 88, 23 70 C23 50, 55 35, 75 55 Z" fill="#9ca3af" />
+                    <path d="M125 35 C105 10, 60 35, 60 70 C60 95, 100 115, 125 115 C150 115, 190 95, 190 70 C190 35, 145 10, 125 35 Z" fill="none" stroke="#f87171" stroke-width="4" />
+                    <path d="M125 35 C145 10, 190 35, 190 70 C190 95, 150 115, 125 115 L125 102 C145 102, 177 88, 177 70 C177 50, 145 35, 125 55 Z" fill="#f87171" />
+                    <g transform="translate(75, 60)">
+                        <rect x="0" y="0" width="25" height="18" fill="#f87171" stroke="white" stroke-width="2" />
+                        <rect x="25" y="0" width="25" height="18" fill="#9ca3af" stroke="white" stroke-width="2" />
+                        <rect x="21" y="5" width="8" height="8" fill="black" />
+                    </g>
+                </svg>
+                <div class="text-center">
+                    <h1 class="text-rose-600 text-2xl font-bold tracking-tight">母親節卡片</h1>
+                    <p class="text-rose-400 font-medium tracking-widest text-[10px] sm:text-xs">嘉基急診．致敬守護生命的超人媽媽</p>
+                </div>
+            </div>
+            <div class="h-0.5 w-10 bg-rose-200 mx-auto rounded-full opacity-50"></div>
+        </header>
+
+        <div class="flex justify-center mb-6 min-h-[260px] items-end">
+            <div id="envelopeWrapper" class="envelope-wrapper" onclick="toggleCard()">
+                <div class="flap"></div>
+                <div class="letter rounded-lg">
+                    <div class="card-content">
+                        <div class="mb-4">
+                            <span class="bg-rose-50 text-rose-500 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-rose-100">Super Mom's Day</span>
+                        </div>
+                        <h2 class="text-lg font-bold text-rose-600 mb-3 text-left">親愛的超人媽媽們：</h2>
+                        <div class="text-gray-700 leading-relaxed mb-6 text-sm text-left space-y-3">
+                            <p>在急診的第一線，妳們是用專業守護生命的戰士；回到家後，妳們是用溫柔守護孩子的堡壘。</p>
+                            <p>謝謝妳們在忙碌診間與家庭點滴中，依然散發著最堅韌的光芒。這份愛，讓整座城市更溫暖。</p>
+                        </div>
+                        <p class="text-rose-500 font-bold text-lg mb-4 italic underline decoration-rose-200 underline-offset-4">「母親節快樂，辛苦了！」</p>
+                        <div class="border-t-2 border-dashed border-rose-100 pt-4 text-gray-400 text-[10px]">
+                            嘉基急診 全體同仁 敬賀
+                        </div>
+                    </div>
+                </div>
+                <div class="envelope"></div>
+                <div class="heart-btn">
+                    <div class="bg-white p-3 rounded-full shadow-2xl border-4 border-rose-50">
+                        <svg class="w-8 h-8 text-rose-500 animate-pulse" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="mt-8">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-bold text-rose-600">愛的留言牆</h3>
+                <span id="syncStatus" class="text-rose-400 text-[10px] bg-rose-50 px-3 py-1 rounded-full border border-rose-100 flex items-center gap-1 transition-colors">
+                    <span id="syncDot" class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse"></span>
+                    <span id="syncText">載入中...</span>
+                </span>
+            </div>
+
+            <div id="messageWall" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                <div class="col-span-full text-center py-6 text-rose-300 text-xs">載入中...</div>
+            </div>
+
+            <div class="bg-white/90 backdrop-blur rounded-2xl shadow-xl p-5 border border-rose-50">
+                <h4 class="text-sm font-bold text-rose-500 mb-4">我也要留言：</h4>
+                <div class="space-y-3">
+                    <input id="userName" type="text" placeholder="您的稱呼（可不填）" maxlength="20" class="w-full px-4 py-2 bg-rose-50/20 border border-rose-100 rounded-xl text-sm focus:outline-none focus:border-rose-300">
+                    <textarea id="userMsg" rows="2" placeholder="寫下對媽媽們的感謝..." maxlength="200" class="w-full px-4 py-2 bg-rose-50/20 border border-rose-100 rounded-xl text-sm focus:outline-none focus:border-rose-300"></textarea>
+                    <button onclick="postMessage()" id="submitBtn" class="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 rounded-xl text-sm shadow-md active:scale-95 transition-all duration-300">
+                        送出祝福 💌
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // ============================================================
+        // 🔧 設定區：請將下方 URL 替換為你的 Apps Script 部署網址
+        // ============================================================
+        const API_URL = 'https://script.google.com/macros/s/你的部署ID/exec';
+        // ============================================================
+
+        const syncDot = document.getElementById('syncDot');
+        const syncText = document.getElementById('syncText');
+        const syncStatus = document.getElementById('syncStatus');
+
+        function updateSyncStatus(status) {
+            const map = {
+                connected: { dot: 'bg-green-500', text: '已同步', pulse: false, color: 'green' },
+                loading:   { dot: 'bg-yellow-400', text: '載入中...', pulse: true, color: 'rose' },
+                error:     { dot: 'bg-red-500', text: '連線失敗', pulse: false, color: 'red' },
+                local:     { dot: 'bg-blue-400', text: '本機預覽模式', pulse: false, color: 'blue' }
+            };
+            const s = map[status];
+            syncDot.className = `w-2 h-2 rounded-full ${s.dot}` + (s.pulse ? ' animate-pulse' : '');
+            syncText.innerText = s.text;
+        }
+
+        // 是否已設定 API URL
+        const isConfigured = !API_URL.includes('你的部署ID');
+
+        async function loadMessages() {
+            if (!isConfigured) {
+                updateSyncStatus('local');
+                renderMessages(getLocalMessages());
+                return;
+            }
+
+            try {
+                const res = await fetch(API_URL + '?action=list&t=' + Date.now());
+                const data = await res.json();
+                if (data.success) {
+                    updateSyncStatus('connected');
+                    renderMessages(data.messages || []);
+                } else {
+                    throw new Error(data.error || '讀取失敗');
+                }
+            } catch (err) {
+                console.error('載入失敗:', err);
+                updateSyncStatus('error');
+                renderMessages(getLocalMessages());
+            }
+        }
+
+        function renderMessages(messages) {
+            const wall = document.getElementById('messageWall');
+            wall.innerHTML = '';
+
+            if (!messages.length) {
+                wall.innerHTML = '<div class="col-span-full text-center py-6 text-rose-300 text-xs">目前尚無留言，成為第一個送出祝福的人吧！💕</div>';
+                return;
+            }
+
+            messages.forEach(m => {
+                const div = document.createElement('div');
+                div.className = 'message-card p-4 rounded-xl shadow-sm border border-rose-50 bg-white/90';
+
+                let timeString = '';
+                if (m.timestamp) {
+                    const date = new Date(m.timestamp);
+                    if (!isNaN(date)) {
+                        timeString = `${date.getMonth()+1}/${date.getDate()} ${date.getHours().toString().padStart(2,'0')}:${date.getMinutes().toString().padStart(2,'0')}`;
+                    }
+                }
+
+                const safeName = escapeHtml(m.sender || '匿名天使');
+                const safeText = escapeHtml(m.text || '');
+
+                div.innerHTML = `
+                    <p class="text-gray-700 mb-3 text-xs leading-relaxed break-words whitespace-pre-wrap">${safeText}</p>
+                    <div class="flex justify-between items-center border-t border-rose-50 pt-2 text-[9px]">
+                        <span class="font-bold text-rose-400">By: ${safeName}</span>
+                        <span class="text-gray-400">${timeString}</span>
+                    </div>
+                `;
+                wall.appendChild(div);
+            });
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.innerText = str;
+            return div.innerHTML;
+        }
+
+        // localStorage 後備（API 未設定或失敗時使用）
+        function getLocalMessages() {
+            try {
+                return JSON.parse(localStorage.getItem('mom_messages') || '[]');
+            } catch { return []; }
+        }
+        function saveLocalMessage(msg) {
+            const list = getLocalMessages();
+            list.unshift(msg);
+            localStorage.setItem('mom_messages', JSON.stringify(list.slice(0, 30)));
+        }
+
+        window.postMessage = async () => {
+            const nameInput = document.getElementById('userName');
+            const msgInput = document.getElementById('userMsg');
+            const btn = document.getElementById('submitBtn');
+            const text = msgInput.value.trim();
+            const sender = nameInput.value.trim() || '嘉基同仁';
+
+            if (!text) {
+                flashBtn(btn, '請輸入留言內容！', 'bg-rose-400');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            btn.innerHTML = '傳送中...';
+
+            const payload = {
+                text,
+                sender,
+                timestamp: new Date().toISOString()
+            };
+
+            if (!isConfigured) {
+                // 本機模式
+                saveLocalMessage(payload);
+                msgInput.value = '';
+                flashBtn(btn, '已儲存（本機）✨', 'bg-green-500');
+                renderMessages(getLocalMessages());
+                resetBtn(btn);
+                return;
+            }
+
+            try {
+                // 用 text/plain 避免 CORS preflight（跟 ECPR 一樣的策略）
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'add', ...payload })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    msgInput.value = '';
+                    flashBtn(btn, '成功送出！💕', 'bg-green-500');
+                    await loadMessages();
+                } else {
+                    throw new Error(data.error || '送出失敗');
+                }
+            } catch (err) {
+                console.error('送出失敗:', err);
+                // 失敗時存本機作為備援
+                saveLocalMessage(payload);
+                msgInput.value = '';
+                flashBtn(btn, '雲端失敗，已存本機', 'bg-yellow-500');
+                renderMessages(getLocalMessages());
+            }
+
+            resetBtn(btn);
+        };
+
+        function flashBtn(btn, msg, color) {
+            btn.innerHTML = msg;
+            btn.classList.remove('bg-rose-500');
+            btn.classList.add(color);
+        }
+        function resetBtn(btn) {
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = '送出祝福 💌';
+                btn.className = 'w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 rounded-xl text-sm shadow-md active:scale-95 transition-all duration-300';
+            }, 2000);
+        }
+
+        // 花瓣動畫
+        setInterval(() => {
+            const container = document.getElementById('particles-container');
+            if (container.children.length > 20) return;
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            const size = Math.random() * 8 + 4;
+            petal.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 20 20" fill="#fecdd3" opacity="0.4"><path d="M10 2c-2 0-4 2-4 4 0 4 4 12 4 12s4-8 4-12c0-2-2-4-4-4z"/></svg>`;
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animation = `fall ${Math.random() * 5 + 7}s linear forwards`;
+            container.appendChild(petal);
+            setTimeout(() => petal.remove(), 12000);
+        }, 1200);
+
+        window.toggleCard = () => {
+            document.getElementById('envelopeWrapper').classList.toggle('open');
+        };
+
+        // 初始載入 + 每 30 秒自動更新
+        loadMessages();
+        setInterval(loadMessages, 30000);
+    </script>
+</body>
+</html>
