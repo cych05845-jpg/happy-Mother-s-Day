@@ -231,7 +231,7 @@
         // ============================================================
         // 🔧 設定區：請將下方 URL 替換為你的 Apps Script 部署網址
         // ============================================================
-        const API_URL = 'https://script.google.com/macros/s/你的部署ID/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwwAb16vjfgu2zmFVjvV_pfigu193D-pCDWCV6PcnKjZBFNUE4Fgci5_lDkd4RJa-Ex/exec';
         // ============================================================
 
         const syncDot = document.getElementById('syncDot');
@@ -251,7 +251,7 @@
         }
 
         // 是否已設定 API URL
-        const isConfigured = !API_URL.includes('你的部署ID');
+        const isConfigured = API_URL.includes('script.google.com') && !API_URL.includes('你的部署ID');
 
         async function loadMessages() {
             if (!isConfigured) {
